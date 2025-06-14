@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🔥 Generador Avanzado de Contenido con IA | Tu Asistente Creativo</title>
+<meta name="description" content="Genera contenido único para tu blog o redes sociales usando IA. Herramienta rápida, fácil y potente." />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+  body {
+    margin:0; padding:0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #f0f0f0;
+    display:flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    background: #1f4068;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+  header h1 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 2.8rem;
+    letter-spacing: 1.2px;
+    user-select:none;
+  }
+  header p {
+    margin-top: 0.5rem;
+    font-weight: 300;
+    font-size: 1.2rem;
+    color: #b0c4de;
+  }
+  main {
+    flex-grow: 1;
+    max-width: 900px;
+    margin: 2rem auto;
+    background: #2c3e50cc;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    padding: 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+  label {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+    user-select:none;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 140px;
+    border-radius: 12px;
+    border: none;
+    padding: 1rem 1.2rem;
+    font-size: 1.15rem;
+    font-family: 'Poppins', sans-serif;
+    background: #16324f;
+    color: #e0e0e0;
+    box-shadow: inset 0 0 10px #0f2027;
+    transition: box-shadow 0.3s ease;
+  }
+  textarea:focus {
+    outline: none;
+    box-shadow: inset 0 0 14px #00aaffcc;
+  }
+  button {
+    background: #00aaff;
+    color: #222;
+    font-weight: 700;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    user-select:none;
+    align-self: flex-start;
+    transition: background-color 0.25s ease, transform 0.15s ease;
+  }
+  button:hover, button:focus {
+    background: #008ecc;
+    outline: none;
+    transform: scale(1.05);
+  }
+  button:active {
+    transform: scale(0.95);
+  }
+  #output {
+    margin-top: 1rem;
+    background: #1c2a3a;
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    min-height: 180px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #cce7ff;
+    white-space: pre-wrap;
+    position: relative;
+    box-shadow: 0 0 20px #00aaff55;
+  }
+  #copyBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #0077b6;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #d0f0ff;
+    user-select:none;
+    transition: background-color 0.3s ease;
+  }
+  #copyBtn:hover {
+    background: #004a7c;
+  }
+  footer {
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 0.9rem;
+    color: #789;
+    user-select:none;
+  }
+  @media (max-width: 600px) {
+    main {
+      margin: 1rem;
+      padding: 1.5rem;
+    }
+    header h1 {
+      font-size: 2rem;
+    }
+    button {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+<header role="banner">
+  <h1>Generador IA Avanzado 🚀</h1>
+  <p>Escribe un tema y crea textos originales para blogs y redes sociales</p>
+</header>
+<main role="main" aria-label="Generador de contenido">
+  <label for="topicInput">Introduce un tema:</label>
+  <textarea id="topicInput" aria-describedby="errorMsg" placeholder="Ejemplo: viajes económicos, recetas saludables, marketing digital..."></textarea>
+  <button id="generateBtn" aria-describedby="errorMsg">Generar Contenido</button>
+  <div id="errorMsg" role="alert" style="color:#ff6b6b; margin-top: 0.3rem; display:none;"></div>
+  <section id="output" aria-live="polite" tabindex="0" style="display:none;">
+    <button id="copyBtn" aria-label="Copiar contenido generado">📋 Copiar</button>
+    <div id="outputText"></div>
+  </section>
+</main>
+<footer>
+  &copy; 2025 Tu Generador IA. Todos los derechos reservados.
+</footer>
+<script>
+(() => {
+  const btn = document.getElementById('generateBtn');
+  const input = document.getElementById('topicInput');
+  const output = document.getElementById('output');
+  const outputText = document.getElementById('outputText');
+  const copyBtn = document.getElementById('copyBtn');
+  const errorMsg = document.getElementById('errorMsg');
+
+  // Textos generados "simulados"
+  const templates = [
+    t => `¿Quieres destacar en el mundo de "${t}"? Aquí tienes algunos consejos y claves esenciales para lograrlo con éxito.`,
+    t => `Explorar "${t}" te abre las puertas a nuevas oportunidades que pueden transformar tu vida y tu carrera profesional.`,
+    t => `Descubre las mejores estrategias y trucos para potenciar tus habilidades en "${t}", y sorprende a tu audiencia.`,
+    t => `No hay mejor momento que ahora para aprender sobre "${t}". Este campo está creciendo rápidamente y tiene mucho por ofrecer.`,
+    t => `La clave para dominar "${t}" está en la práctica constante y la adaptación a las últimas tendencias.`,
+    t => `Compartir contenido relacionado con "${t}" genera conexión genuina con tu comunidad y aumenta tu influencia.`,
+    t => `Conocer a fondo "${t}" te permitirá crear proyectos innovadores que marcarán la diferencia.`,
+    t => `Sumérgete en el mundo de "${t}" y déjate sorprender por todo lo que puedes lograr con dedicación y creatividad.`,
+  ];
+
+  function generateContent(topic) {
+    const n = 3 + Math.floor(Math.random()*3);
+    let selected = new Set();
+    let result = '';
+    while(selected.size < n) {
+      let idx = Math.floor(Math.random() * templates.length);
+      if(!selected.has(idx)) {
+        selected.add(idx);
+        result += templates[idx](topic) + "\\n\\n";
+      }
+    }
+    return result.trim();
+  }
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.style.display = 'block';
+    input.setAttribute('aria-invalid', 'true');
+    output.style.display = 'none';
+  }
+
+  function clearError() {
+    errorMsg.textContent = '';
+    errorMsg.style.display = 'none';
+    input.removeAttribute('aria-invalid');
+  }
+
+  btn.addEventListener('click', () => {
+    const topic = input.value.trim();
+    if(!topic) {
+      showError('Por favor, escribe un tema válido para generar contenido.');
+      return;
+    }
+    clearError();
+    const text = generateContent(topic);
+    outputText.textContent = text;
+    output.style.display = 'block';
+    output.focus();
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if(!outputText.textContent) return;
+    navigator.clipboard.writeText(outputText.textContent)
+      .then(() => {
+        copyBtn.textContent = '✅ Copiado';
+        setTimeout(() => copyBtn.textContent = '📋 Copiar', 2000);
+      }).catch(() => {
+        alert('No se pudo copiar automáticamente. Por favor, copia manualmente.');
+      });
+  });
+
+  input.addEventListener('input', () => {
+    if(errorMsg.style.display === 'block') {
+      clearError();
+    }
+  });
+})();
+</script>
+</body>
+</html>
