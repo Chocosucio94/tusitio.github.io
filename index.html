@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Generador de Contenido con IA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f0f4f8;
+            color: #333;
+            text-align: center;
+        }
+        header {
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #0078d7;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            margin-top: 20px;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            resize: vertical;
+        }
+        button {
+            margin-top: 15px;
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #005a9e;
+        }
+        #output {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            min-height: 100px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            white-space: pre-wrap;
+            text-align: left;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Generador de Contenido con IA 🤖</h1>
+        <p>Escribe un tema y genera textos creativos para tus redes y blogs.</p>
+    </header>
+
+    <textarea id="input" placeholder="Escribe aquí el tema..."></textarea><br />
+    <button onclick="generarContenido()">Generar Contenido</button>
+
+    <div id="output"></div>
+
+    <script>
+        function generarContenido() {
+            const tema = document.getElementById('input').value.trim();
+            const output = document.getElementById('output');
+
+            if (!tema) {
+                output.textContent = 'Por favor, escribe un tema para generar contenido.';
+                return;
+            }
+
+            // Simulación básica de generación de contenido con IA (placeholder)
+            const textosEjemplo = [
+                `Aquí tienes un texto creativo sobre "${tema}" para tus redes sociales.`,
+                `¿Quieres saber más sobre "${tema}"? Aquí tienes una descripción interesante.`,
+                `Descubre cómo "${tema}" puede impactar en tu vida y tu negocio.`,
+                `10 razones por las que "${tema}" es importante hoy en día.`,
+                `"${tema}": todo lo que necesitas saber para empezar.`,
+            ];
+
+            // Escoger un texto aleatorio
+            const textoGenerado = textosEjemplo[Math.floor(Math.random() * textosEjemplo.length)];
+
+            output.textContent = textoGenerado;
+        }
+    </script>
+</body>
+</html>
