@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Generador avanzado de contenido con IA para blogs y redes sociales. Contenido creativo, original y listo para copiar." />
+<title>Generador de Contenido IA – Profesional y Moderno 🚀</title>
+<style>
+  /* Reset básico */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Contenedor principal */
+  main {
+    background: #ffffffee;
+    color: #222;
+    border-radius: 12px;
+    max-width: 700px;
+    width: 100%;
+    padding: 2.5rem 3rem;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Encabezado */
+  header {
+    text-align: center;
+  }
+  header h1 {
+    font-size: 2.8rem;
+    margin: 0;
+    color: #1e3c72;
+  }
+  header p {
+    font-size: 1.15rem;
+    margin-top: 0.3rem;
+    color: #555;
+  }
+
+  /* Área de texto */
+  textarea {
+    font-size: 1.1rem;
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    border: 2px solid #1e3c72;
+    resize: vertical;
+    min-height: 140px;
+    transition: border-color 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: #2a5298;
+    box-shadow: 0 0 8px #2a5298aa;
+  }
+
+  /* Botón generar */
+  button#generateBtn {
+    background: #1e3c72;
+    color: white;
+    font-weight: 700;
+    padding: 1rem 1.8rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    user-select: none;
+  }
+  button#generateBtn:hover,
+  button#generateBtn:focus {
+    background: #2a5298;
+    outline: none;
+    transform: scale(1.05);
+  }
+  button#generateBtn:active {
+    transform: scale(0.97);
+  }
+
+  /* Contenedor resultado */
+  #output {
+    background: #f0f4f8;
+    color: #222;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    min-height: 160px;
+    position: relative;
+    white-space: pre-wrap;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-family: 'Georgia', serif;
+  }
+
+  /* Botón copiar */
+  #copyBtn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #1e3c72;
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: opacity 0.25s ease;
+    user-select: none;
+  }
+  #copyBtn:hover {
+    opacity: 1;
+  }
+  #copyBtn:focus {
+    outline: 2px solid #2a5298;
+    outline-offset: 2px;
+  }
+
+  /* Mensaje de error */
+  #errorMsg {
+    color: #cc0000;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    user-select: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    main {
+      padding: 1.5rem 1.5rem;
+    }
+    header h1 {
+      font-size: 2rem;
+    }
+    button#generateBtn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  /* Clase para accesibilidad */
+  .visually-hidden {
+    position: absolute !important;
+    height: 1px; width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<main role="main" aria-label="Generador de contenido con inteligencia artificial">
+  <header>
+    <h1>Generador de Contenido IA <span aria-hidden="true">🚀</span></h1>
+    <p>Introduce un tema para crear textos creativos y originales para tu blog o redes sociales.</p>
+  </header>
+
+  <label for="input" class="visually-hidden">Tema para generar contenido</label>
+  <textarea id="input" placeholder="Ejemplo: marketing digital, recetas veganas, viajes económicos..." aria-describedby="errorMsg"></textarea>
+  <div id="errorMsg" role="alert" aria-live="assertive" style="display:none;"></div>
+
+  <button id="generateBtn" aria-describedby="errorMsg">Generar contenido</button>
+
+  <article id="output" aria-live="polite" style="display:none;" tabindex="0">
+    <button id="copyBtn" aria-label="Copiar contenido generado">📋 Copiar</button>
+    <div id="outputText"></div>
+  </article>
+</main>
+
+<script>
+  (() => {
+    const generateBtn = document.getElementById('generateBtn');
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    const outputText = document.getElementById('outputText');
+    const copyBtn = document.getElementById('copyBtn');
+    const errorMsg = document.getElementById('errorMsg');
+
+    // Textos largos simulados de alta calidad para simular IA
+    const paragraphs = [
+      (topic) => `El tema "${topic}" es esencial en el mundo actual. Su estudio y comprensión pueden abrir puertas a nuevas oportunidades y conocimientos valiosos.`,
+      (topic) => `Explorar "${topic}" nos permite descubrir tendencias innovadoras y aplicar técnicas que impulsan el crecimiento personal y profesional.`,
+      (topic) => `Cada vez más, "${topic}" toma protagonismo en diversas industrias, convirtiéndose en un motor para el cambio y la transformación digital.`,
+      (topic) => `Si deseas destacar en "${topic}", es fundamental estar al tanto de las mejores prácticas y herramientas que facilitan su aplicación efectiva.`,
+      (topic) => `Además, compartir contenido relacionado con "${topic}" genera mayor interacción y fidelización en tu comunidad digital.`,
+      (topic) => `La clave para dominar "${topic}" radica en la constancia y la actualización constante, adaptándose a las novedades del sector.`,
+      (topic) => `Gracias a "${topic}", muchos emprendedores y profesionales han logrado innovar y superar retos complejos con éxito.`,
+      (topic) => `En definitiva, "${topic}" es un campo lleno de posibilidades que vale la pena explorar y explotar para potenciar tus proyectos.`,
+    ];
+
+    // Función para generar contenido
+    function generateContent(topic) {
+      const count = Math.floor(Math.random() * 3) + 3; // 3-5 párrafos
+      const usedIndexes = new Set();
+      let content = '';
+
+      while (usedIndexes.size < count) {
+        const idx = Math.floor(Math.random() * paragraphs.length);
+        if (!usedIndexes.has(idx)) {
+          usedIndexes.add(idx);
+          content += paragraphs[idx](topic) + '\n\n';
+        }
+      }
+
+      return content.trim();
+    }
+
+    // Función para mostrar error
+    function showError(message) {
+      errorMsg.textContent = message;
+      errorMsg.style.display = 'block';
+      input.setAttribute('aria-invalid', 'true');
+    }
+
+    // Función para limpiar error
+    function clearError() {
+      errorMsg.textContent = '';
+      errorMsg.style.display = 'none';
+      input.removeAttribute('aria-invalid');
+    }
+
+    // Evento botón generar
+    generateBtn.addEventListener('click', () => {
+      const topic = input.value.trim();
+
+      if (!topic) {
+        showError('Por favor, introduce un tema válido para generar contenido.');
+        output.style.display = 'none';
+        return;
+      }
+
+      clearError();
+      const generated = generateContent(topic);
+      outputText.textContent = generated;
+      output.style.display = 'block';
+      output.focus();
+    });
+
+    // Evento botón copiar
+    copyBtn.addEventListener('click', () => {
+      if (!outputText.textContent) return;
+      navigator.clipboard.writeText(outputText.textContent).then(() => {
+        copyBtn.textContent = '✅ Copiado';
+        setTimeout(() => copyBtn.textContent = '📋 Copiar', 2000);
+      }).catch(() => {
+        alert('No se pudo copiar el texto. Por favor, copia manualmente.');
+      });
+    });
+
+    // Accesibilidad: limpiar error cuando el usuario escribe
+    input.addEventListener('input', () => {
+      if (errorMsg.style.display === 'block') {
+        clearError();
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
