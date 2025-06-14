@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generador Tu Contenido con IA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f0f2f5;
+    }
+    h1 {
+      color: #333;
+    }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 400px;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Generador de Contenido con IA</h1>
+  <p>Escribe un tema y te generaremos un texto para redes sociales:</p>
+
+  <input type="text" id="tema" placeholder="Ej: Cómo ahorrar dinero">
+  <button onclick="generarContenido()">Generar</button>
+
+  <div id="output"></div>
+
+  <script>
+    async function generarContenido() {
+      const tema = document.getElementById("tema").value;
+      const output = document.getElementById("output");
+      
+      output.innerText = "Generando contenido...";
+
+      // Puedes reemplazar este bloque con una llamada real a una API de IA (OpenAI, HuggingFace, etc.)
+      setTimeout(() => {
+        output.innerText = `Aquí tienes un post para redes sobre "${tema}":\n\n✅ ${tema.toUpperCase()} es una excelente forma de mejorar tu día a día. Sigue estos consejos y verás resultados. 💡`;
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
